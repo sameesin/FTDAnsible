@@ -95,7 +95,8 @@ def validate_params(connection, op_name, path_params):
                 field_name: validation_report
             })
     except Exception as e:
-        raise ValidationError({field_name: str(e)}) from e
+        raise ValidationError({field_name: str(e)})
+#        raise ValidationError({field_name: str(e)}) from e
 
 
 def main():

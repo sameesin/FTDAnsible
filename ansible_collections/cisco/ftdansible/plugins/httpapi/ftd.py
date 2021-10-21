@@ -128,7 +128,7 @@ class HttpApi(HttpApiBase):
             self.connection._auth = {'Authorization': "Bearer %s" % self.access_token}
         except KeyError as key_error:
             raise ConnectionError(
-                "Server returned response without token info during connection authentication: %s" % response) from key_error
+                "Server returned response without token info during connection authentication: %s" % response)
 
     def _lookup_login_url(self, payload):
         """ Try to find correct login URL and get api token using this URL.
@@ -196,7 +196,7 @@ class HttpApi(HttpApiBase):
             # HttpApi connection does not read the error response from HTTPError, so we do it here and wrap it up in
             # ConnectionError, so the actual error message is displayed to the user.
             error_msg = json.loads(to_text(e.read()))
-            raise ConnectionError("%s: %s" % (error_msg_prefix, error_msg), http_code=e.code) from e
+            raise ConnectionError("%s: %s" % (error_msg_prefix, error_msg), http_code=e.code)
         finally:
             self._ignore_http_errors = False
 
@@ -330,7 +330,8 @@ class HttpApi(HttpApiBase):
             return json.loads(response_text) if response_text else {}
         # JSONDecodeError only available on Python 3.5+
         except getattr(json.decoder, 'JSONDecodeError', ValueError) as get_attr_error:
-            raise ConnectionError("Invalid JSON response: %s" % response_text) from get_attr_error
+            raise ConnectionError("Invalid JSON response: %s" % response_text)
+#            raise ConnectionError("Invalid JSON response: %s" % response_text) from get_attr_error
 
     def get_operation_spec(self, operation_name):
         return self.api_spec[SpecProp.OPERATIONS].get(operation_name, None)
