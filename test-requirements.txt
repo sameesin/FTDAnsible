@@ -12,5 +12,4 @@ units
 urllib3==1.26.5
 voluptuous
 yamllint
-ordereddict
-enum34
+enum34ordereddict
