@@ -74,20 +74,9 @@ jobs:
       # The docker container has all the pinned dependencies that are required
       # and all python versions ansible supports.
         
-      - name: Run sanity tests on python 2.6
-        run: ansible-test sanity --docker -v --color --python 2.6
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-        continue-on-error: true
-
-      - name: Run sanity tests on python 2.7
-        run: ansible-test sanity --docker -v --color --python 2.7
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-        continue-on-error: true        
-
       - name: Run sanity tests on python 3.5
         run: ansible-test sanity --docker -v --color --python 3.5
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-        continue-on-error: true        
 
       - name: Run sanity tests on python 3.6
         run: ansible-test sanity --docker -v --color --python 3.6
@@ -116,26 +105,6 @@ jobs:
       - name: Install units
         run: pip install units
 
-      # Install enum34
-      - name: Install enum34
-        run: pip install enum34
-
-      # Install ordereddict
-      - name: Install ordereddict
-        run: pip install ordereddict        
-
-      # Run the unit tests on python 2.6
-      - name: Run unit test python 2.6
-        run: ansible-test units --docker -v --color --python 2.6
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-        continue-on-error: true
-        
-      # Run the unit tests on python 2.7
-      - name: Run unit test python 2.7
-        run: ansible-test units --docker -v --color --python 2.7
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-        continue-on-error: true
-        
       # Run the unit tests on python 3.5
       - name: Run unit test python 3.5
         run: ansible-test units --docker -v --color --python 3.5
@@ -156,4 +125,5 @@ jobs:
       - name: Run unit test python 3.8
         run: ansible-test units --docker -v --color --python 3.8
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
 
