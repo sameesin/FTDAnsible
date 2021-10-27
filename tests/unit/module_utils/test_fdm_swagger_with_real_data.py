@@ -7,7 +7,7 @@ import os
 import unittest
 
 try:
-    from ansible.module_utils.fdm_swagger_client import FdmSwaggerValidator, FdmSwaggerParser
+    from plugins.module_utils.fdm_swagger_client import FdmSwaggerValidator, FdmSwaggerParser
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerValidator, FdmSwaggerParser
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))

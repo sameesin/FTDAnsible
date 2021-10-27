@@ -50,24 +50,24 @@ class TestFtdInstall(object):
 
     @pytest.fixture(autouse=True)
     def connection_mock(self, mocker):
-        connection_class_mock = mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_install.Connection')
+        connection_class_mock = mocker.patch('plugins.modules.ftd_install.Connection')
         return connection_class_mock.return_value
 
     @pytest.fixture
     def config_resource_mock(self, mocker):
-        resource_class_mock = mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_install.BaseConfigurationResource')
+        resource_class_mock = mocker.patch('plugins.modules.ftd_install.BaseConfigurationResource')
         return resource_class_mock.return_value
 
     @pytest.fixture(autouse=True)
     def ftd_factory_mock(self, mocker):
-        return mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_install.FtdPlatformFactory')
+        return mocker.patch('plugins.modules.ftd_install.FtdPlatformFactory')
 
     @pytest.fixture(autouse=True)
     def has_kick_mock(self, mocker):
-        return mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_install.HAS_KICK', True)
+        return mocker.patch('plugins.modules.ftd_install.HAS_KICK', True)
 
     def test_module_should_fail_when_kick_is_not_installed(self, mocker):
-        mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_install.HAS_KICK', False)
+        mocker.patch('plugins.modules.ftd_install.HAS_KICK', False)
 
         set_module_args(dict(DEFAULT_MODULE_PARAMS))
         with pytest.raises(AnsibleFailJson) as ex:

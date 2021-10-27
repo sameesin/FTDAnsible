@@ -27,13 +27,22 @@ from ansible.errors import AnsibleConnectionFailure
 from ansible.module_utils.connection import ConnectionError
 from ansible.module_utils.six import BytesIO, PY3, StringIO
 from ansible.module_utils.six.moves.urllib.error import HTTPError
-from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
-from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
-from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import mock_open, patch
 
-from ansible_collections.cisco.ftdansible.plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
-from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
-from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
+try:
+    from tests.unit.compat import mock
+    from tests.unit.compat import unittest
+    from tests.unit.compat.mock import mock_open, patch
+    from plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
+    from plugins.module_utils.common import HTTPMethod, ResponseParams
+    from plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
+except ImportError:
+    from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
+    from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
+    from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import mock_open, patch
+    from ansible_collections.cisco.ftdansible.plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
+
 
 if PY3:
     BUILTINS_NAME = 'builtins'
@@ -227,7 +236,7 @@ class TestFtdHttpApi(unittest.TestCase):
         open_mock().write.assert_called_once_with(b'File content')
 
     @patch('os.path.basename', mock.Mock(return_value='test.txt'))
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.encode_multipart_formdata',
+    @patch('plugins.httpapi.ftd.encode_multipart_formdata',
            mock.Mock(return_value=('--Encoded data--', 'multipart/form-data')))
     def test_upload_file(self):
         self.connection_mock.send.return_value = self._connection_response({'id': '123'})
@@ -245,7 +254,7 @@ class TestFtdHttpApi(unittest.TestCase):
         open_mock.assert_called_once_with('/tmp/test.txt', 'rb')
 
     @patch('os.path.basename', mock.Mock(return_value='test.txt'))
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.encode_multipart_formdata',
+    @patch('plugins.httpapi.ftd.encode_multipart_formdata',
            mock.Mock(return_value=('--Encoded data--', 'multipart/form-data')))
     def test_upload_file_raises_exception_when_invalid_response(self):
         self.connection_mock.send.return_value = self._connection_response('invalidJsonResponse')
@@ -355,8 +364,8 @@ class TestFtdHttpApi(unittest.TestCase):
             supported_versions = self.ftd_plugin._get_supported_api_versions()
             assert supported_versions == ['v1']
 
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_api_token_path', mock.MagicMock(return_value=None))
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_known_token_paths')
+    @patch('plugins.httpapi.ftd.HttpApi._get_api_token_path', mock.MagicMock(return_value=None))
+    @patch('plugins.httpapi.ftd.HttpApi._get_known_token_paths')
     def test_lookup_login_url_with_empty_response(self, get_known_token_paths_mock):
         payload = mock.MagicMock()
         get_known_token_paths_mock.return_value = []
@@ -366,9 +375,9 @@ class TestFtdHttpApi(unittest.TestCase):
             payload
         )
 
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_known_token_paths')
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._send_login_request')
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.display')
+    @patch('plugins.httpapi.ftd.HttpApi._get_known_token_paths')
+    @patch('plugins.httpapi.ftd.HttpApi._send_login_request')
+    @patch('plugins.httpapi.ftd.display')
     def test_lookup_login_url_with_failed_request(self, display_mock, api_request_mock, get_known_token_paths_mock):
         payload = mock.MagicMock()
         url = mock.MagicMock()
@@ -381,10 +390,10 @@ class TestFtdHttpApi(unittest.TestCase):
         )
         assert display_mock.vvvv.called
 
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_api_token_path', mock.MagicMock(return_value=None))
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_known_token_paths')
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._send_login_request')
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._set_api_token_path')
+    @patch('plugins.httpapi.ftd.HttpApi._get_api_token_path', mock.MagicMock(return_value=None))
+    @patch('plugins.httpapi.ftd.HttpApi._get_known_token_paths')
+    @patch('plugins.httpapi.ftd.HttpApi._send_login_request')
+    @patch('plugins.httpapi.ftd.HttpApi._set_api_token_path')
     def test_lookup_login_url_with_positive_result(self, set_api_token_mock, api_request_mock,
                                                    get_known_token_paths_mock):
         payload = mock.MagicMock()
@@ -398,14 +407,14 @@ class TestFtdHttpApi(unittest.TestCase):
         set_api_token_mock.assert_called_once_with(url)
         assert resp == response_mock
 
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_supported_api_versions')
+    @patch('plugins.httpapi.ftd.HttpApi._get_supported_api_versions')
     def test_get_known_token_paths_with_positive_response(self, get_list_of_supported_api_versions_mock):
         test_versions = ['v1', 'v2']
         get_list_of_supported_api_versions_mock.return_value = test_versions
         result = self.ftd_plugin._get_known_token_paths()
         assert result == [TOKEN_PATH_TEMPLATE.format(version) for version in test_versions]
 
-    @patch('ansible_collections.cisco.ftdansible.plugins.httpapi.ftd.HttpApi._get_supported_api_versions')
+    @patch('plugins.httpapi.ftd.HttpApi._get_supported_api_versions')
     def test_get_known_token_paths_with_failed_api_call(self, get_list_of_supported_api_versions_mock):
         get_list_of_supported_api_versions_mock.side_effect = ConnectionError('test errro message')
         result = self.ftd_plugin._get_known_token_paths()

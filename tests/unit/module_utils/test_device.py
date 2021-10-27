@@ -6,9 +6,15 @@ import pytest
 
 pytest.importorskip("kick")
 
-from ansible_collections.cisco.ftdansible.plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
-    FtdAsa5500xPlatform, Ftd2100Platform, AbstractFtdPlatform
-from ansible_collections.cisco.ftdansible.tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
+try:
+    from plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
+        FtdAsa5500xPlatform, Ftd2100Platform, AbstractFtdPlatform
+    from tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
+except ImportError:
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
+        FtdAsa5500xPlatform, Ftd2100Platform, AbstractFtdPlatform
+    from ansible_collections.cisco.ftdansible.tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
+
 
 
 class TestFtdModel(object):
@@ -26,8 +32,8 @@ class TestFtdPlatformFactory(object):
 
     @pytest.fixture(autouse=True)
     def mock_devices(self, mocker):
-        mocker.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.device.Kp')
-        mocker.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.device.Ftd5500x')
+        mocker.patch('plugins.module_utils.device.Kp')
+        mocker.patch('plugins.module_utils.device.Ftd5500x')
 
     def test_factory_should_return_corresponding_platform(self):
         ftd_platform = FtdPlatformFactory.create(FtdModel.FTD_ASA5508_X.value, dict(DEFAULT_MODULE_PARAMS))
@@ -71,7 +77,7 @@ class TestFtd2100Platform(object):
 
     @pytest.fixture
     def kp_mock(self, mocker):
-        return mocker.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.device.Kp')
+        return mocker.patch('plugins.module_utils.device.Kp')
 
     @pytest.fixture
     def module_params(self):
@@ -103,7 +109,7 @@ class TestFtdAsa5500xPlatform(object):
 
     @pytest.fixture
     def asa5500x_mock(self, mocker):
-        return mocker.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.device.Ftd5500x')
+        return mocker.patch('plugins.module_utils.device.Ftd5500x')
 
     @pytest.fixture
     def module_params(self):

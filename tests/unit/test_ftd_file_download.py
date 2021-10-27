@@ -28,7 +28,7 @@ class TestFtdFileDownload(object):
 
     @pytest.fixture
     def connection_mock(self, mocker):
-        connection_class_mock = mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_file_download.Connection')
+        connection_class_mock = mocker.patch('plugins.modules.ftd_file_download.Connection')
         return connection_class_mock.return_value
 
     @pytest.mark.parametrize("missing_arg", ['operation', 'destination'])
