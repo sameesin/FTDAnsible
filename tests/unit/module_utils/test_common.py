@@ -22,7 +22,7 @@ __metaclass__ = type
 
 try:
     from plugins.module_utils.common import equal_objects, delete_ref_duplicates, construct_ansible_facts
-except ImportError: 
+except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import equal_objects, delete_ref_duplicates, construct_ansible_facts
 
 
