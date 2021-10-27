@@ -10,7 +10,7 @@ try:
     from tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
     from plugins.modules import ftd_install
     from plugins.module_utils.device import FtdModel
-except ImportError:   
+except ImportError:
     from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import PropertyMock
     from ansible_collections.cisco.ftdansible.tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
     from ansible_collections.cisco.ftdansible.plugins.modules import ftd_install
