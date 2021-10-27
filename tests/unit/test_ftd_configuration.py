@@ -6,15 +6,18 @@ __metaclass__ = type
 
 import pytest
 from ansible.module_utils import basic
-from ansible_collections.cisco.ftdansible.tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
-
-
-from ansible_collections.cisco.ftdansible.plugins.modules import ftd_configuration
 
 try:
-    from ansible.module_utils.common import FtdConfigurationError, FtdServerError, FtdUnexpectedResponse
-    from ansible.module_utils.configuration import FtdInvalidOperationNameError, CheckModeException
-    from ansible.module_utils.fdm_swagger_client import ValidationError
+    from tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
+    from plugins.modules import ftd_configuration
+except ImportError:
+    from ansible_collections.cisco.ftdansible.tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
+    from ansible_collections.cisco.ftdansible.plugins.modules import ftd_configuration
+
+try:
+    from plugins.module_utils.common import FtdConfigurationError, FtdServerError, FtdUnexpectedResponse
+    from plugins.module_utils.configuration import FtdInvalidOperationNameError, CheckModeException
+    from plugins.module_utils.fdm_swagger_client import ValidationError
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import FtdConfigurationError, FtdServerError, FtdUnexpectedResponse
     from ansible_collections.cisco.ftdansible.plugins.module_utils.configuration import FtdInvalidOperationNameError, CheckModeException
@@ -30,12 +33,12 @@ class TestFtdConfiguration(object):
 
     @pytest.fixture(autouse=True)
     def connection_mock(self, mocker):
-        connection_class_mock = mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_configuration.Connection')
+        connection_class_mock = mocker.patch('plugins.modules.ftd_configuration.Connection')
         return connection_class_mock.return_value
 
     @pytest.fixture
     def resource_mock(self, mocker):
-        resource_class_mock = mocker.patch('ansible_collections.cisco.ftdansible.plugins.modules.ftd_configuration.BaseConfigurationResource')
+        resource_class_mock = mocker.patch('plugins.modules.ftd_configuration.BaseConfigurationResource')
         resource_instance = resource_class_mock.return_value
         return resource_instance.execute_operation
 

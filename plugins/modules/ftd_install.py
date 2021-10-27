@@ -199,8 +199,8 @@ from enum import Enum
 from ansible.module_utils.six import iteritems
 
 try:
-    from ansible.module_utils.configuration import BaseConfigurationResource, ParamName, PATH_PARAMS_FOR_DEFAULT_OBJ
-    from ansible.module_utils.device import HAS_KICK, FtdPlatformFactory, FtdModel
+    from plugins.module_utils.configuration import BaseConfigurationResource, ParamName, PATH_PARAMS_FOR_DEFAULT_OBJ
+    from plugins.module_utils.deviceimport HAS_KICK, FtdPlatformFactory, FtdModel
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.configuration import BaseConfigurationResource, ParamName, PATH_PARAMS_FOR_DEFAULT_OBJ
     from ansible_collections.cisco.ftdansible.plugins.module_utils.device import HAS_KICK, FtdPlatformFactory, FtdModel

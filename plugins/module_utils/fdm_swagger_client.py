@@ -20,7 +20,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod
+try:
+    from plugins.module_utils.common import HTTPMethod
+except ImportError:
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod
 
 from ansible.module_utils.six import integer_types, string_types, iteritems
 

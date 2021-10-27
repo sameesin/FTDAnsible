@@ -6,11 +6,17 @@ __metaclass__ = type
 
 import pytest
 from ansible.module_utils import basic
-from ansible_collections.cisco.ftdansible.tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
 
-from ansible_collections.cisco.ftdansible.plugins.modules import ftd_file_upload
-from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import OperationField
-from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod
+try:
+    from tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
+    from plugins.modules import ftd_file_upload
+    from plugins.module_utils.fdm_swagger_client import OperationField
+    from plugins.module_utils.common import HTTPMethod
+except ImportError:
+    from ansible_collections.cisco.ftdansible.tests.unit.modules.utils import set_module_args, exit_json, fail_json, AnsibleFailJson, AnsibleExitJson
+    from ansible_collections.cisco.ftdansible.plugins.modules import ftd_file_upload
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import OperationField
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod
 
 
 class TestFtdFileUpload(object):

@@ -20,7 +20,10 @@ from __future__ import absolute_import, division, print_function
 
 __metaclass__ = type
 
-from ansible_collections.cisco.ftdansible.plugins.module_utils.common import equal_objects, delete_ref_duplicates, construct_ansible_facts
+try:
+    from plugins.module_utils.common import equal_objects, delete_ref_duplicates, construct_ansible_facts
+except ImportError: 
+    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import equal_objects, delete_ref_duplicates, construct_ansible_facts
 
 
 # simple objects
