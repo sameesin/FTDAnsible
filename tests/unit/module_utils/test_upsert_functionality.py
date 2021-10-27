@@ -91,8 +91,8 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
 
     @mock.patch.object(BaseConfigurationResource, "_get_operation_name")
     @mock.patch.object(BaseConfigurationResource, "edit_object")
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.copy_identity_properties")
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration._set_default")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.copy_identity_properties')
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration._set_default')
     def test_edit_upserted_object(self, _set_default_mock, copy_properties_mock, edit_object_mock, get_operation_mock):
         model_operations = mock.MagicMock()
         existing_object = mock.MagicMock()
@@ -122,7 +122,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
             params
         )
 
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
