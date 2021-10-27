@@ -221,7 +221,7 @@ pip install -r test-requirements.txt
 
 3. Add Ansible modules to the Python path:
 ```
-export PYTHONPATH=$PYTHONPATH:.:$ANSIBLE_DIR/lib:$ANSIBLE_DIR/test
+export PYTHONPATH=$PYTHONPATH:$ANSIBLE_DIR/lib:$ANSIBLE_DIR/test
 ```
 
 4. Run unit tests:

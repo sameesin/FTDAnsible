@@ -16,7 +16,6 @@ except ImportError:
     from ansible_collections.cisco.ftdansible.tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
 
 
-
 class TestFtdModel(object):
 
     def test_has_value_should_return_true_for_existing_models(self):
