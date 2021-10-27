@@ -145,7 +145,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         edit_mock.assert_not_called()
 
     @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.equal_objects')
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
@@ -170,7 +170,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         edit_mock.assert_called_once_with(get_operation_mock.return_value, existing_obj, params)
 
     @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.equal_objects')
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
@@ -194,7 +194,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         equal_objects_mock.assert_called_once_with(existing_obj, params[ParamName.DATA])
         edit_mock.assert_not_called()
 
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
@@ -217,7 +217,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         add_mock.assert_not_called()
         edit_mock.assert_not_called()
 
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
@@ -240,7 +240,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         edit_mock.assert_not_called()
 
     @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.equal_objects')
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
@@ -267,7 +267,7 @@ class TestUpsertOperationUnitTests(unittest.TestCase):
         add_mock.assert_not_called()
         edit_mock.assert_called_once_with(get_operation_mock.return_value, existing_obj, params)
 
-    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported")
+    @mock.patch('ansible_collections.cisco.ftdansible.plugins.module_utils.configuration.OperationChecker.is_upsert_operation_supported')
     @mock.patch.object(BaseConfigurationResource, "get_operation_specs_by_model_name")
     @mock.patch.object(BaseConfigurationResource, "_find_object_matching_params")
     @mock.patch.object(BaseConfigurationResource, "_add_upserted_object")
