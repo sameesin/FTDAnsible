@@ -28,7 +28,7 @@ from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
 from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import call, patch
 
 from ansible_collections.cisco.ftdansible.plugins.module_utils.configuration import iterate_over_pageable_resource, BaseConfigurationResource, \
-        OperationChecker, OperationNamePrefix, ParamName, QueryParams
+    OperationChecker, OperationNamePrefix, ParamName, QueryParams
 
 try:
     from ansible.module_utils.common import HTTPMethod, FtdUnexpectedResponse
