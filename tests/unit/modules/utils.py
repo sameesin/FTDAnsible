@@ -3,13 +3,8 @@ __metaclass__ = type
 
 import json
 
-try:
-    from tests.unit.compat import unittest
-    from tests.unit.compat.mock import patch
-except ImportError:
-    from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
-    from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import patch
-
+from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
+from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import patch
 from ansible.module_utils import basic
 from ansible.module_utils._text import to_bytes
 

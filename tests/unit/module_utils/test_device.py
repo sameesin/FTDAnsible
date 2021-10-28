@@ -6,14 +6,9 @@ import pytest
 
 pytest.importorskip("kick")
 
-try:
-    from plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
+from ansible_collections.cisco.ftdansible.plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
         FtdAsa5500xPlatform, Ftd2100Platform, AbstractFtdPlatform
-    from tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
-except ImportError:
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.device import FtdPlatformFactory, FtdModel, \
-        FtdAsa5500xPlatform, Ftd2100Platform, AbstractFtdPlatform
-    from ansible_collections.cisco.ftdansible.tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
+from ansible_collections.cisco.ftdansible.tests.unit.test_ftd_install import DEFAULT_MODULE_PARAMS
 
 
 class TestFtdModel(object):

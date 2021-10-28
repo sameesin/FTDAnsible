@@ -25,8 +25,8 @@ import os
 import unittest
 
 try:
-    from plugins.module_utils.fdm_swagger_client import FdmSwaggerParser
-    from plugins.module_utils.common import HTTPMethod
+    from ansible.module_utils.fdm_swagger_client import FdmSwaggerParser
+    from ansible.module_utils.common import HTTPMethod
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod

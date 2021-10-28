@@ -27,22 +27,13 @@ from ansible.errors import AnsibleConnectionFailure
 from ansible.module_utils.connection import ConnectionError
 from ansible.module_utils.six import BytesIO, PY3, StringIO
 from ansible.module_utils.six.moves.urllib.error import HTTPError
+from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
+from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
+from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import mock_open, patch
 
-try:
-    from tests.unit.compat import mock
-    from tests.unit.compat import unittest
-    from tests.unit.compat.mock import mock_open, patch
-    from plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
-    from plugins.module_utils.common import HTTPMethod, ResponseParams
-    from plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
-except ImportError:
-    from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
-    from ansible_collections.cisco.ftdansible.tests.unit.compat import unittest
-    from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import mock_open, patch
-    from ansible_collections.cisco.ftdansible.plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
-
+from ansible_collections.cisco.ftdansible.plugins.httpapi.ftd import HttpApi, BASE_HEADERS, TOKEN_PATH_TEMPLATE, DEFAULT_API_VERSIONS
+from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
+from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp
 
 if PY3:
     BUILTINS_NAME = 'builtins'

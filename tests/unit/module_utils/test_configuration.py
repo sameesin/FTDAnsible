@@ -24,21 +24,18 @@ import json
 import unittest
 
 import pytest
+from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
+from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import call, patch
+
+from ansible_collections.cisco.ftdansible.plugins.module_utils.configuration import iterate_over_pageable_resource, BaseConfigurationResource, \
+        OperationChecker, OperationNamePrefix, ParamName, QueryParams
 
 try:
-    from plugins.module_utils.common import HTTPMethod, FtdUnexpectedResponse
-    from plugins.module_utils.fdm_swagger_client import ValidationError, OperationField
-    from tests.unit.compat import mock
-    from tests.unit.compat.mock import call, patch
-    from plugins.module_utils.configuration import iterate_over_pageable_resource, BaseConfigurationResource, \
-        OperationChecker, OperationNamePrefix, ParamName, QueryParams
+    from ansible.module_utils.common import HTTPMethod, FtdUnexpectedResponse
+    from ansible.module_utils.fdm_swagger_client import ValidationError, OperationField
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, FtdUnexpectedResponse
     from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import ValidationError, OperationField
-    from ansible_collections.cisco.ftdansible.tests.unit.compat import mock
-    from ansible_collections.cisco.ftdansible.tests.unit.compat.mock import call, patch
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.configuration import iterate_over_pageable_resource, BaseConfigurationResource, \
-        OperationChecker, OperationNamePrefix, ParamName, QueryParams
 
 
 class TestBaseConfigurationResource(object):
