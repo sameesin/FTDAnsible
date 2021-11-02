@@ -26,9 +26,9 @@ from functools import partial
 from ansible.module_utils.six import iteritems
 
 try:
-    from plugins.module_utils.common import HTTPMethod, equal_objects, FtdConfigurationError, \
+    from ansible.module_utils.common import HTTPMethod, equal_objects, FtdConfigurationError, \
         FtdServerError, ResponseParams, copy_identity_properties, FtdUnexpectedResponse
-    from plugins.module_utils.fdm_swagger_client import OperationField, ValidationError
+    from ansible.module_utils.fdm_swagger_client import OperationField, ValidationError
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, equal_objects, FtdConfigurationError, \
         FtdServerError, ResponseParams, copy_identity_properties, FtdUnexpectedResponse

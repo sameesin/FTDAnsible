@@ -75,8 +75,8 @@ from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.connection import Connection
 
 try:
-    from plugins.module_utils.fdm_swagger_client import OperationField, ValidationError, FILE_MODEL_NAME
-    from plugins.module_utils.common import FtdServerError, HTTPMethod
+    from ansible.module_utils.fdm_swagger_client import OperationField, ValidationError, FILE_MODEL_NAME
+    from ansible.module_utils.common import FtdServerError, HTTPMethod
 except ImportError:
     from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import OperationField, ValidationError, FILE_MODEL_NAME
     from ansible_collections.cisco.ftdansible.plugins.module_utils.common import FtdServerError, HTTPMethod
