@@ -189,8 +189,8 @@ jobs:
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # Install units
-      - name: Install units
-        run: pip install units
+      # - name: Install units
+      #   run: pip install units
 
       # Run the unit tests on python 3.5
       - name: Run unit tests
