@@ -62,12 +62,8 @@ from urllib3 import encode_multipart_formdata
 from urllib3.fields import RequestField
 from ansible.module_utils.connection import ConnectionError
 
-try:
-    from plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp, FdmSwaggerValidator
-    from plugins.module_utils.common import HTTPMethod, ResponseParams
-except ImportError:
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp, FdmSwaggerValidator
-    from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
+from ansible_collections.cisco.ftdansible.plugins.module_utils.fdm_swagger_client import FdmSwaggerParser, SpecProp, FdmSwaggerValidator
+from ansible_collections.cisco.ftdansible.plugins.module_utils.common import HTTPMethod, ResponseParams
 
 BASE_HEADERS = {
     'Content-Type': 'application/json',
