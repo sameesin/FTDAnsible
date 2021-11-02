@@ -119,6 +119,7 @@ jobs:
 
       # ansible-test requires the collection to be in a directory in the form
       # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -139,6 +140,16 @@ jobs:
         run: ansible-test sanity --docker -v --color
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
+      # ansible-test support producing code coverage date
+      - name: Generate coverage report
+        # run: ansible-test coverage xml -v --requirements --group-by command --group-by version
+        run: ansible-test coverage xml -v --requirements --group-by command --group-by version
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      # See the reports at https://codecov.io/gh/GITHUBORG/REPONAME
+      - uses: codecov/codecov-action@v1
+        with:
+          fail_ci_if_error: false
 
 ###
 # Unit tests (REQUIRED)
@@ -160,6 +171,7 @@ jobs:
 
       # ansible-test requires the collection to be in a directory in the form
       # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -185,7 +197,12 @@ jobs:
         run: ansible-test units --docker -v --color
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
 
-  coverage:
+###
+# Unit tests (REQUIRED)
+#
+# https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
+
+  units:
     name: Unit (Ⓐ${{ matrix.ansible }})
     strategy:
       matrix:
@@ -200,6 +217,7 @@ jobs:
 
       # ansible-test requires the collection to be in a directory in the form
       # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -216,14 +234,11 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-      # ansible-test support producing code coverage date
-      - name: Generate coverage report
-        # run: ansible-test coverage xml -v --requirements --group-by command --group-by version
-        run: ansible-test coverage xml -v --requirements --group-by command --group-by version
+      # Install units
+      - name: Install units
+        run: pip install units
+
+      # Run the unit tests on python 3.5
+      - name: Run unit tests
+        run: ansible-test units --docker -v --color
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-
-      # See the reports at https://codecov.io/gh/GITHUBORG/REPONAME
-      - uses: codecov/codecov-action@v1
-        with:
-          fail_ci_if_error: false
-
