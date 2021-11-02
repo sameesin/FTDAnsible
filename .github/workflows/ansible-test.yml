@@ -119,7 +119,6 @@ jobs:
 
       # ansible-test requires the collection to be in a directory in the form
       # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
-
       - name: Check out code
         uses: actions/checkout@v2
         with:
@@ -136,17 +135,86 @@ jobs:
       - name: Install ansible-base (${{ matrix.ansible }})
         run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
-      # Install test requirements
-      # - name: Install test requirements
-      #   run: pwd && ls -al && find . && pip install -r ./test-requirements.txt
-
-      # run ansible-test sanity inside of Docker.
-      # The docker container has all the pinned dependencies that are required
-      # and all python versions ansible supports.
-
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color
         working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+
+###
+# Unit tests (REQUIRED)
+#
+# https://docs.ansible.com/ansible/latest/dev_guide/testing_sanity.html
+
+  units:
+    name: Unit (Ⓐ${{ matrix.ansible }})
+    strategy:
+      matrix:
+        ansible:
+          - stable-2.9
+          - stable-2.10
+          # It's important that Sanity is tested against all stable-X.Y branches
+          # Testing against `devel` may fail as new tests are added.
+          # - stable-2.9 # Only if your collection supports Ansible 2.9
+    runs-on: ubuntu-latest
+    steps:
+
+      # ansible-test requires the collection to be in a directory in the form
+      # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          # it is just required to run that once as "ansible-test sanity" in the docker image
+          # will run on all python versions it supports.
+          python-version: 3.8
+
+      # Install the head of the given branch (devel, stable-2.10)
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
+
+      # Install units
+      - name: Install units
+        run: pip install units
+
+      # Run the unit tests on python 3.5
+      - name: Run unit tests
+        run: ansible-test units --docker -v --color
+        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+  coverage:
+    name: Unit (Ⓐ${{ matrix.ansible }})
+    strategy:
+      matrix:
+        ansible:
+          - stable-2.9
+          - stable-2.10
+          # It's important that Sanity is tested against all stable-X.Y branches
+          # Testing against `devel` may fail as new tests are added.
+          # - stable-2.9 # Only if your collection supports Ansible 2.9
+    runs-on: ubuntu-latest
+    steps:
+
+      # ansible-test requires the collection to be in a directory in the form
+      # .../ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}/
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          # it is just required to run that once as "ansible-test sanity" in the docker image
+          # will run on all python versions it supports.
+          python-version: 3.8
+
+      # Install the head of the given branch (devel, stable-2.10)
+      - name: Install ansible-base (${{ matrix.ansible }})
+        run: pip install https://github.com/ansible/ansible/archive/${{ matrix.ansible }}.tar.gz --disable-pip-version-check
 
       # ansible-test support producing code coverage date
       - name: Generate coverage report
@@ -159,15 +227,3 @@ jobs:
         with:
           fail_ci_if_error: false
 
-      # Install units
-      - name: Install units
-        run: pip install units
-
-      # Run the unit tests on python 3.5
-      - name: Run unit tests
-        run: ansible-test units --docker -v --color
-        working-directory: ./ansible_collections/${{env.NAMESPACE}}/${{env.COLLECTION_NAME}}
-
-# ansible-galaxy importer test
-# do not set this to run as true
-# just set it to run minus the ansible-test
